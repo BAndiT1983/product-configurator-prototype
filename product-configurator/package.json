@@ -1,0 +1,26 @@
+{
+  "name": "product-configurator-prototype",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^2.8.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-plugin-lit": "^1.9.1",
+    "eslint-plugin-wc": "^2.0.3",
+    "ts-lit-plugin": "^1.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "yarn-upgrade-all": "^0.7.2"
+  }
+}

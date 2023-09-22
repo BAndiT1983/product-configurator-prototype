@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite + Lit + TS</title>
+        <link rel="stylesheet" href="./src/index.css" />
+        <script
+            type="module"
+            src="/src/components/ProductConfigurator.ts"
+        ></script>
+    </head>
+    <body>
+        <div
+            style="
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                padding: 2rem;
+            "
+        >
+            <product-configurator productName="purse" />
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
