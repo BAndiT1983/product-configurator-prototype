@@ -1,11 +1,10 @@
-import { TemplateResult, LitElement, html } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { range } from "lit/directives/range.js";
-import { map } from "lit/directives/map.js";
 import material_data from "./product_data.json";
+import { Product, Material, Nullable } from "./Interfaces";
 
 @customElement("product-configurator")
-export class MyElement extends LitElement {
+export class ProductConfigurator extends LitElement {
     // @property()
     // availableColors: Array<Array<string>>;
 
@@ -19,7 +18,7 @@ export class MyElement extends LitElement {
     imageFolder: String;
 
     @property()
-    materialData: Object[];
+    materialData: Nullable<Product>;
 
     @property() colors = ["red", "green", "blue"];
 
@@ -50,42 +49,10 @@ export class MyElement extends LitElement {
         this.imageFolder = "";
 
         // const materialData = await response.json();
-        //
-        this.materialData = [];
+
+        this.materialData = null;
         console.log("MAT: ", material_data);
         this.activeColors = [0, 0, 0];
-        // this.availableColors = [
-        //     [
-        //         "#f5f1dc",
-        //         "#ffa500",
-        //         "#c62323",
-        //         "#790d0d",
-        //         "#0b6704",
-        //         "#0893d7",
-        //         "#945f08",
-        //         "#807474",
-        //         "#000000",
-        //     ],
-        //     [
-        //         "#f7cfa6",
-        //         "#d7be34",
-        //         "#ff6c00",
-        //         "#02491d",
-        //         "#073569",
-        //         "#a61515",
-        //         "#b84432",
-        //         "#6f1b05",
-        //         "#272727",
-        //         // "#0a0a0a",
-        //         "#f3cb8e",
-        //         "#986262",
-        //         "#71471c",
-        //         "#2b1b1b",
-        //     ],
-        //     ["#BB1E1E", "#E7C632", "#1AA11A"],
-        //     // ["#FF4433", "#33FF44"],
-        //     // ["#227799", "#444466"],
-        // ];
     }
 
     setActiveColor(layerIndex: number, index: number) {
@@ -98,19 +65,18 @@ export class MyElement extends LitElement {
         return active;
     }
 
-    getActiveColorByLayer(layerIndex: number) {
-        var color =
-            this.materialData.colors[layerIndex][this.activeColors[layerIndex]]
-                .color;
+    getActiveColorByLayer(layerIndex: number): string {
+        if (!this.materialData) {
+            return "";
+        }
 
-        if (
-            this.materialData.colors[layerIndex][this.activeColors[layerIndex]]
-                .displayColor
-        ) {
-            color =
-                this.materialData.colors[layerIndex][
-                    this.activeColors[layerIndex]
-                ].displayColor;
+        const layerData = this.materialData.materials[layerIndex];
+
+        const colorIndex = this.activeColors[layerIndex];
+        var color: string = layerData[colorIndex].color;
+
+        if (layerData[colorIndex].displayColor) {
+            color = layerData[colorIndex].displayColor || "";
         }
 
         console.log("ACT_COLOR: ", color);
@@ -131,7 +97,7 @@ export class MyElement extends LitElement {
             return;
         }
 
-        this.setActiveColor(layerIndex, colorIndex);
+        this.setActiveColor(parseInt(layerIndex), parseInt(colorIndex));
         console.log("AC: ", this.activeColors);
         console.log("GAC: ", this.getActiveColorByLayer(0));
         this.currentColor = this.getActiveColorByLayer(0);
@@ -151,9 +117,12 @@ export class MyElement extends LitElement {
         ></div>`;
     }
 
-    colorRowTemplate(layerIndex: number, layerData: Array<Object>) {
-        // console.log("CRT: ", this.materialData);
-        // console.log("LAYER: ", layerData);
+    colorRowTemplate(layerIndex: number, layerData: Material[]) {
+        if (!this.materialData) {
+            console.error("Product data is not available");
+            return;
+        }
+
         return html`<div style="display:flex">
             <div
                 style="color: gray; font-size: 0.8rem; display: flex; align-self: center;"
@@ -185,8 +154,15 @@ export class MyElement extends LitElement {
     }
 
     render() {
-        // console.log("PN: ", this.productName);
-        this.materialData = material_data[this.productName];
+        const data: Map<string, Product> = new Map(
+            Object.entries(material_data)
+        );
+        this.materialData = data.get(this.productName);
+        if (!this.materialData) {
+            console.error("Product data is not available");
+            return;
+        }
+
         this.imageFolder = this.materialData.image_folder;
 
         return html`
@@ -283,8 +259,8 @@ export class MyElement extends LitElement {
                 <div
                     style="display:flex; flex-direction: column; align-items: center;"
                 >
-                    ${this.materialData.colors.map(
-                        (entry, layerIndex) =>
+                    ${this.materialData.materials.map(
+                        (entry: Material[], layerIndex: number) =>
                             this.colorRowTemplate(layerIndex, entry)
                         // console.log("ROW");
                     )}
