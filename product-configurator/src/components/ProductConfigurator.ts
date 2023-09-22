@@ -23,7 +23,7 @@ export class ProductConfigurator extends LitElement {
     @property() colors = ["red", "green", "blue"];
 
     @property()
-    size = 1;
+    size = 1.5;
 
     @property()
     currentColor: string = "#ff0000";
@@ -123,7 +123,9 @@ export class ProductConfigurator extends LitElement {
             return;
         }
 
-        return html`<div style="display:flex">
+        return html`<div
+            style="display:flex;flex-wrap: wrap;justify-content: center;"
+        >
             <div
                 style="color: gray; font-size: 0.8rem; display: flex; align-self: center;"
             >
@@ -168,10 +170,14 @@ export class ProductConfigurator extends LitElement {
         return html`
             <style>
                 .configurator {
-                    padding: 1rem;
+                    padding: 0.5rem;
                     border: 1px solid lightgray;
-                    min-width: 10rem;
-                    min-height: 20rem;
+                    width: 100%,
+                    height: 100%,
+                    /* min-width: 10rem;
+                    min-height: 20rem; */
+                    /* width: 100vw; */
+                    /* height: 100vh; */
                     display: flex;
                     flex-direction: column;>
                     align-items: center;
