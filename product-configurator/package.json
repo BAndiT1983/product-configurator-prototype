@@ -15,7 +15,7 @@
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "eslint-plugin-lit": "^1.9.1",
     "eslint-plugin-wc": "^2.0.3",
     "ts-lit-plugin": "^1.2.1",

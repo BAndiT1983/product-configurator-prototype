@@ -171,15 +171,8 @@ export class ProductConfigurator extends LitElement {
             <style>
                 .configurator {
                     padding: 0.5rem;
-                    border: 1px solid lightgray;
-                    width: 100%,
-                    height: 100%,
-                    /* min-width: 10rem;
-                    min-height: 20rem; */
-                    /* width: 100vw; */
-                    /* height: 100vh; */
                     display: flex;
-                    flex-direction: column;>
+                    flex-direction: column;
                     align-items: center;
                 }
 
@@ -202,8 +195,8 @@ export class ProductConfigurator extends LitElement {
 
                 .image-container {
                     position: relative;
-                    /* width: 40rem; */
-                    height: 40rem;
+                    width: 100%;
+                    height: 85vh;
                     background-image: url("${this.imageFolder}/Background.png");
                     background-repeat: no-repeat;
                     background-position: center;
@@ -242,8 +235,8 @@ export class ProductConfigurator extends LitElement {
                     mask-image: url("${this.imageFolder}/Layer1.png");
                     -webkit-mask-image: url("${this.imageFolder}/Layer1.png");
                     mix-blend-mode: ${this.getMixMode(
-                    this.getActiveColorByLayer(0)
-                )};
+                        this.getActiveColorByLayer(0)
+                    )};
                 }
 
                 .layer2-image {
@@ -252,8 +245,8 @@ export class ProductConfigurator extends LitElement {
                     mask-image: url("${this.imageFolder}/Layer2.png");
                     -webkit-mask-image: url("${this.imageFolder}/Layer2.png");
                     mix-blend-mode: ${this.getMixMode(
-                    this.getActiveColorByLayer(1)
-                )};
+                        this.getActiveColorByLayer(1)
+                    )};
                 }
             </style>
 
@@ -268,7 +261,6 @@ export class ProductConfigurator extends LitElement {
                     ${this.materialData.materials.map(
                         (entry: Material[], layerIndex: number) =>
                             this.colorRowTemplate(layerIndex, entry)
-                        // console.log("ROW");
                     )}
                 </div>
             </div>
